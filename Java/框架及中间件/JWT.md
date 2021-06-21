@@ -382,3 +382,5 @@ fetch('api/user/1', {
       }
      }
    ```
+
+![](../../picture/4231.png)
