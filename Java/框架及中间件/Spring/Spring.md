@@ -17,11 +17,11 @@
 
 - @RequestBody：主要是用来接受json字符串中的数据的 ，get和post 都可以传输json形式的数据，通常使用post
 
-![1587889482271-puc.png](https://i.loli.net/2020/10/15/rSVv3pYsWA1EDLf.png)
+![1587889482271-puc.png](../../../picture/rSVv3pYsWA1EDLf.png)
 
 - @ResquestParam：有时候只想传一个String或者Integer类型的数据，接受的参数没有实体与其对应，也不想进行json合适化，则使用@ResquestParam直接映射到数据
 
-![1587887880274-la6.png](https://i.loli.net/2020/10/15/ISDwkrEPWuvMCfx.png)
+![1587887880274-la6.png](../../../picture/ISDwkrEPWuvMCfx.png)
 
 - 在后端的接受方法中@ResquestBody和@ResquestParam可以同时使用,但一个请求中@ResquestBody只能有一个,@ResquestParam可以有多个（ResquestBody的参数会封装到json中，ResquestParam会拼接在url后面）
 - @ResponseBody的作用就是将返回的对象封装为一个json格式的数据，返回的数据就不是html标签，而是某种格式的数据（json xml）等。
@@ -195,7 +195,7 @@ public class User {
 
 ### 基本信息
 
-![936870-20160922153752027-1272044443.png](https://i.loli.net/2020/10/15/qyLetMmOEac89F1.png)
+![936870-20160922153752027-1272044443.png](../../../picture/qyLetMmOEac89F1.png)
 
 **Spring框架的核心就是IoC（控制反转）和AOP（面向切面编程）**
 
