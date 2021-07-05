@@ -73,65 +73,6 @@ source /etc/profile
 - static修饰的方法或变量不依赖对象进行访问,只要类被加载了,就可以通过类名进行访问
 - static代码块可以存在于类中的任何地方可以由多个static代码块 ,在类被加载的时候static代码块按照顺序进行执行(只执行一次) 所以可以优化程序性能(很多时候我们将只需进行一次的初始化操作放到static代码块中)
 
-## 面试点：
-
-### ==和equals的区别
-
-对于基本数据类型来说，==比较的是值；对于引用数据类型来说，==比较的是对象的内存地址
-
-> Java只有值传递，对于==来说不管是基本数据类型还是引用数据类型，本质都是比较值，引用数据类型变量的值就是对象的内存地址
-
-``equals()``不能作用用于判断基本数据类型的变量，只能用于判断两个对象是否相等。``equals()``方法存于``Object``中，实现如下：
-
-```java
-public boolean equals(Object obj) {
-     return (this == obj);
-}
-```
-
-使用场景：
-
-* 类没有覆盖了``equals()``方法：等价于 == ，默认使用的是``Object``中的``equals()``方法
-* 类覆盖了``equals()``方法：使用该类中重写的``equals()``方法进行比较，如果属性值相等则返回true（这两个对象相等）
-
-```java
-public static void main(String[] args) {
-
-        String a = new String("ab"); // a 为一个引用
-        String b = new String("ab"); // b为另一个引用,对象的内容一样
-        String aa = "ab"; // 放在常量池中
-        String bb = "ab"; // 从常量池中查找
-        if (aa == bb) // true
-            System.out.println("true");
-        if (a == b) // false，非同一对象
-            System.out.println("true");
-        if (a.equals(b)) // true
-            System.out.println("true");
-        if (42 == 42.0) { // true
-            System.out.println("true");
-        }if(aa.equals(bb)){  //true
-            System.out.println("true");
-        }
-    }
-```
-
-**说明：**
-
-* String重写了``equals()``方法，所有比较的是对象的值
-* 当创建String类型对象时，虚拟机会在常量池中查找是否存在与创建对象值相同的值，如果有则赋给当前引用，如果没有则在常量池中创建新对象
-
-### continue、break、return
-
-在循环体中，当不满足循环条件或者达到循环次数时，循环体就会正常结束；但是我们需要在循环体中满足某种条件而提前结束循环，就会使用到这些关键字
-
-1. continue：跳出当此循环，执行下次循环
-2. break：跳出整体循环，结束循环执行后续代码
-3. return：直接返回结果，结束方法运行，使用方法如下：
-   * `return;`：直接结束方法运行且无返回值
-   * `return value;`：结束方法并返回结果
-
-
-
 # 数据类型
 ## 基本数据类型
 Java有8中基本数据类型，如下：
@@ -242,8 +183,6 @@ String是不可变的，可以理解为常量，所有是线程安全的。
    2. 单线程操作大量数据使用StringBuilder
    3. 多线程操作大量数据使用StringBuffer
 
-
-
 # 方法
 
 ## 静态方法与非静态成员
@@ -278,7 +217,7 @@ StringBuilder message1 = new StringBuilder("hello world");
 
 **注释：**
 
-Java允许重载任何方法，不止是构造器。要完整描述一个方法需要指定方法名及参数类型。这叫做方法的签名（signature）。例如，String类就有4中称为indexOf()的方法，签名如下：
+Java允许重载任何方法，不止是构造器。要完整描述一个方法需要指定方法名及参数列表（参数类型和顺序）。这叫做方法的**签名**（signature）。例如，String类就有4中称为indexOf()的方法，签名如下：
 
 ```java
 indexOf(int)
@@ -488,14 +427,6 @@ JavaI/O流主要是从如下4中类派生出来的
 * InputStream、Reader：所有输入流的基类，前者是字节流后者是字符流
 * OutputStream、Writer：所有输出流的基类，前者是字节流后者是字符流
 
-## 面试点
-
-### 为啥有了字符流还要字节流
-
-不管是文件读写还是网络发送接收，信息的最小单位都是字节。
-
-字符流是JVM将字节流转换得来的，但是这个过程非常耗时，当不知道编码类型的时候容易出现乱码的问题。I/O中提供的字符流操作接口方便我们对字符的操作。对于音频、图片、媒体文件用字节流比较好，对于字符文件用字符流比较好
-
 # 设计模式
 
 - 创建型模式（五种）：工厂方法模式、抽象工厂模式、单例模式、建造者模式、原型模式
@@ -516,11 +447,11 @@ lambda编程是建立在函数式接口得基础上的
 
 1. 只包含一个抽象方法的接口，称为函数式接口。
 2. 可以通过 Lambda 表达式来创建该接口的对象。
-3. 可以在任意函数式接口上使用 @FunctionalInterface 注解，这样做可以检测它是否是一个函数式接口，同时 javadoc 也会包含一条声明，说明这个接口是一个函数式接口。
+3. 可以在任意函数式接口上使用 ==@FunctionalInterface== 注解，这样做可以检测它是否是一个函数式接口，同时 javadoc 也会包含一条声明，说明这个接口是一个函数式接口。
 
 在实际开发者两个比较常见的函数式接口：**Runnable接口，Comparator接口**
 
-***函数式接口的实例可以通过 lambda 表达式、 方法引用、构造方法引用来创建\***
+**函数式接口的实例可以通过 lambda 表达式、 方法引用、构造方法引用来创建**
 
 ```java
 public class TestArray {
@@ -569,3 +500,191 @@ public class TestArray {
 ```
 
 ###  
+
+# 面试点
+
+## ==和equals的区别
+
+对于基本数据类型来说，==比较的是值==；对于引用数据类型来说，==比较的是对象的内存地址==
+
+> Java只有值传递，对于==来说不管是基本数据类型还是引用数据类型，本质都是比较值，引用数据类型变量的值就是对象的内存地址
+
+``equals()``不能用于判断基本数据类型的变量，只能用于判断两个对象是否相等。``equals()``方法存于``Object``中，实现如下：
+
+```java
+public boolean equals(Object obj) {
+     return (this == obj);
+}
+```
+
+使用场景：
+
+* 类没有覆盖了``equals()``方法：等价于 == ，默认使用的是``Object``中的``equals()``方法
+* 类覆盖了``equals()``方法：使用该类中重写的``equals()``方法进行比较，如果属性值相等则返回true（这两个对象相等）
+
+```java
+public static void main(String[] args) {
+
+        String a = new String("ab"); //a 为一个引用
+        String b = new String("ab"); //b为另一个引用,对象的内容一样
+        String aa = "ab";            // 放在常量池中
+        String bb = "ab";            // 从常量池中查找
+
+        System.out.println(aa == bb);       //true
+        System.out.println(aa.equals(bb));  //true
+        System.out.println(a == b);         //false
+        System.out.println(a.equals(b));    //true
+        System.out.println(a == aa);        //false
+        System.out.println(a.equals(aa));   //true
+    }
+```
+
+**说明：**
+
+* String重写了``equals()``方法，所有比较的是对象的值
+* Java为了避免产生大量String对象，设计了常量池，创建字符串时会先在常量池中查询是否存在值相等的字符串，如果有则不创建，没有则在常量池创建新的字符串常量
+* new String("ab") 时，虚拟机会在常量池中查找是否存在与ab字符串（与创建对象值相同的值），如果有则赋给当前引用，如果没有则在常量池中创建新字符串常量；new Stirng时还会在堆内存中创建新的String对象，存储ab。所以new 一个String 对象，会先在常量池查找再在堆中创建String 对象，String a = new String("ab")会创建一个或两个对象
+
+![image-20210702112548422](../../picture/image-20210702112548422.png)
+
+## continue、break、return
+
+在循环体中，当不满足循环条件或者达到循环次数时，循环体就会正常结束；但是我们需要在循环体中满足某种条件而提前结束循环，就会使用到这些关键字
+
+1. continue：跳出当此循环，执行下次循环
+2. break：跳出整体循环，结束循环执行后续代码
+3. return：直接返回结果，结束方法运行，使用方法如下：
+   * `return;`：直接结束方法运行且无返回值
+   * `return value;`：结束方法并返回结果
+
+## 如何查看线程死锁
+
+1. 可以通过jstack命令进行查看，会显示发生死锁的线程
+2. 两个线程操作数据库时，数据库可能发生死锁，这时就要查询数据库的死锁情况
+
+## 说一下ThreadLocal
+
+1. ThreadLocal是Java中提供的线程本地存储机制，可以利用该机制将数据缓存在线程内部，保证数据的属于当前线程
+
+2. ThreadLocal底层是通过ThreadLocalMap实现，每一个Thread对象（注意不是ThreadLocal对象）都存放一个ThreadLocalMap对象，Map的key就是ThreadLocal对象，value就是要缓存的值
+
+3. 如果在线程池中使用ThreadLocal会造成内存溢出。因为线程池中的线程没有停止，那么就会一直有强引用指向ThreadLocal对象，而ThreadLocal对象有包含了key、value的Entry对象，这个对象也无法被GC回收，随着线程长时间执行，这个对象就会越来越多最终造成内存溢出
+
+   **解决方法：**在线程执行完毕后通过ThreadLocal中的`remove`方法手动清理其中的Entry对象
+
+```java
+public class User {
+
+    private ThreadLocal<String> name = new ThreadLocal<>();
+
+
+    public String getName() {
+        return this.name.get();
+    }
+
+    public void setName(String name) {
+        this.name.set(name);
+    }
+    
+    public void remove(){
+        this.name.remove();         //ThreadLocal中的remove方法 清理Entry对象
+    }
+
+    /*private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }*/
+}
+----------------------------------------------------------------------------------------
+
+public static void main(String[] args) {
+        User user = new User();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                user.setName("hello");
+
+                try{
+                    TimeUnit.SECONDS.sleep(3);
+                    System.out.println(Thread.currentThread()+"----"+user.getName());
+                    
+                    user.remove();    //调用 remove方法
+                }catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                user.setName("world");
+
+                try{
+                    TimeUnit.SECONDS.sleep(3);
+                    System.out.println(Thread.currentThread()+"----"+user.getName());
+                    
+                    user.remove();
+                }catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+-----------------------------------------------------------------------------------------
+每个线程使用的都是缓存在该线程中的name
+Thread[Thread-1,5,main]----world
+Thread[Thread-0,5,main]----hello
+
+```
+
+```java
+  //ThreadLocal中的remove方法实现
+    public void remove() {
+         ThreadLocalMap m = getMap(Thread.currentThread());
+         if (m != null)
+             m.remove(this);
+     }
+```
+
+```java
+//ThreadLocal中的set方法实现   ThreadLocalMap存储 key 为ThreadLocal对象 value为缓存的值
+   public void set(T value) {
+        Thread t = Thread.currentThread();
+        ThreadLocalMap map = getMap(t);
+        if (map != null)
+            map.set(this, value);
+        else
+            createMap(t, value);
+    }
+```
+
+```java
+//ThreadLocal中的get方法实现   通过ThreadLocal对象作为key 查询value
+   public T get() {
+        Thread t = Thread.currentThread();
+        ThreadLocalMap map = getMap(t);
+        if (map != null) {
+            ThreadLocalMap.Entry e = map.getEntry(this);
+            if (e != null) {
+                @SuppressWarnings("unchecked")
+                T result = (T)e.value;
+                return result;
+            }
+        }
+        return setInitialValue();
+    }
+```
+
+## 为啥有了字符流还要字节流
+
+不管是文件读写还是网络发送接收，信息的最小单位都是字节。
+
+字符流是JVM将字节流转换得来的，但是这个过程非常耗时，当不知道编码类型的时候容易出现乱码的问题。I/O中提供的字符流操作接口方便我们对字符的操作。对于音频、图片、媒体文件用字节流比较好，对于字符文件用字符流比较好
+
