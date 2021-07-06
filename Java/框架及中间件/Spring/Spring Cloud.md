@@ -1,4 +1,4 @@
-## 一、Spring Cloud组件
+# Spring Cloud组件
 
 - Spring Cloud Netflix：核心组件，可以对多个Netflix OSS开源套件进行整合，包括以下几个组件：
   - Eureka：服务治理组件，包含服务注册与发现
@@ -16,7 +16,7 @@
 
 **注册入eureka的微服务down了后 在eureka上还是显示up**
 
-#### **openFeign**
+## **openFeign**
 
 @FeignClient(value = "cloud-provider-hystrix-payment") 添加在service上 controller调用的时候就会通过value 找到对应的微服务，并调用其中的方法。
 
@@ -48,7 +48,7 @@ ribbon:
 
 
 
-#### **Hystrix服务的降级**
+## **Hystrix服务的降级**
 
 **说明：**
 
@@ -70,7 +70,7 @@ ribbon:
 
 
 
-#### **Hystrix服务的熔断**
+## **Hystrix服务的熔断**
 
 **说明：**
 

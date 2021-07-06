@@ -154,34 +154,7 @@ int n = i;       //拆箱
 
 ## 常量池
 
-## 面试点：
 
-### String StringBuffer和StringBuilder
-
-1. **可变性**
-
-String类中使用final关键字修饰数组来保存字符串，`private final char value[];`，所有String是不可变的
-
-StringBuffer和StringBuilder都是继承自`AbstractStringBuilder`类，该类中使用`char[] value;`来保存字符串，所有这两种对象是可变的
-
->  在 Java 9 之后，String 、`StringBuilder` 与 `StringBuffer` 的实现改用 byte 数组存储字符串 `private final byte[] value` 
-
-2. **线程安全性**
-
-String是不可变的，可以理解为常量，所有是线程安全的。
-
-`AbstractStringBuilder`中定义了一些字符串的基本操作方法，如 `expandCapacity`、`append`、`insert`、`indexOf` 等公共方法 。StringBuffer对这些方法加了同步锁`synchronized`所有是线程安全的，而StringBuilder没有所有是线程不安全的
-
-3. **性能**
-
-每次对String进行改变的时候都会创建一个新的String对象（因为是不可变的），然后指针指向新的对象，所有新能较低。
-
- StringBuffer 和StringBuilder都是对其本身进行操作，而不产生新的对象。相同情况下StringBuilder比StringBuffer提升10%~15%的性能。
-
-4. **总结**
-   1. 操作少量数据时使用String
-   2. 单线程操作大量数据使用StringBuilder
-   3. 多线程操作大量数据使用StringBuffer
 
 # 方法
 
@@ -502,6 +475,37 @@ public class TestArray {
 ###  
 
 # 面试点
+
+
+
+## String StringBuffer和StringBuilder
+
+1. **可变性**
+
+String类中使用final关键字修饰数组来保存字符串，`private final char value[];`，所有String是不可变的
+
+StringBuffer和StringBuilder都是继承自`AbstractStringBuilder`类，该类中使用`char[] value;`来保存字符串，所有这两种对象是可变的
+
+>  在 Java 9 之后，String 、`StringBuilder` 与 `StringBuffer` 的实现改用 byte 数组存储字符串 `private final byte[] value` 
+
+2. **线程安全性**
+
+String是不可变的，可以理解为常量，所有是线程安全的。
+
+`AbstractStringBuilder`中定义了一些字符串的基本操作方法，如 `expandCapacity`、`append`、`insert`、`indexOf` 等公共方法 。StringBuffer对这些方法加了同步锁`synchronized`所有是线程安全的，而StringBuilder没有所有是线程不安全的
+
+3. **性能**
+
+每次对String进行改变的时候都会创建一个新的String对象（因为是不可变的），然后指针指向新的对象，所有新能较低。
+
+ StringBuffer 和StringBuilder都是对其本身进行操作，而不产生新的对象。相同情况下StringBuilder比StringBuffer提升10%~15%的性能。
+
+4. **总结**
+   1. 操作少量数据时使用String
+   2. 单线程操作大量数据使用StringBuilder
+   3. 多线程操作大量数据使用StringBuffer
+
+
 
 ## ==和equals的区别
 
